@@ -7,6 +7,7 @@ package Converter;
 
 import Exceptions.MeasureTypeNotRecognised;
 import Exceptions.BadNumberOfArgumentsException;
+import Exceptions.InputNotSupportedException;
 import Exceptions.NumberOutOfDoubleRangeException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -29,7 +30,7 @@ public class ConverterRequirment8Test {
     }
 
     @Test
-    public void testIfAnwsersAreInSeperatedLines() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void testIfAnwsersAreInSeperatedLines() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("5034 m ");
        
         boolean anwsKmIsSeperatedLine = anws.contains("5.034 km\n");
@@ -38,18 +39,15 @@ public class ConverterRequirment8Test {
         assertTrue(anwsKmIsSeperatedLine);
         assertTrue(anwsCmIsSeperatedLine);
         
-        System.out.println(anws);
  
     }
     
     
     @Test
-    public void testForNotMultiplyInput() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void testForNotMultiplyInput() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("1000 m to km");
        
         assertFalse(anws.contains("\n")); //this one output shoudn't contain new line indicator
-    
-        System.out.println(anws);
  
     }
     

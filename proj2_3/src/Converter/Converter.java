@@ -7,6 +7,7 @@ package Converter;
 
 import Exceptions.MeasureTypeNotRecognised;
 import Exceptions.BadNumberOfArgumentsException;
+import Exceptions.InputNotSupportedException;
 import Exceptions.NumberOutOfDoubleRangeException;
 import java.util.ArrayList;
 
@@ -20,22 +21,25 @@ public class Converter {
     public Converter() {
         loadDefaultMeasures();
     }
-    protected boolean correct(String inputToValidate) throws BadNumberOfArgumentsException {
+    protected boolean correct(String inputToValidate) throws BadNumberOfArgumentsException, InputNotSupportedException {
         String [] tableOfWords = inputToValidate.split(" ");
         
         
         if( tableOfWords.length  < 2)
             throw new BadNumberOfArgumentsException();
         
-        if( tableOfWords.length == 4) {
+        if( tableOfWords.length == 4 || tableOfWords.length == 5) {
             //The case when we specify destination measurment eg. 20 inch to cm
             if( !tableOfWords[2].equals("to") )
-                return false;
+                throw new InputNotSupportedException();
         } 
         
-        if (tableOfWords.length == 3 || tableOfWords.length > 4)
+        if (tableOfWords.length == 3 || tableOfWords.length > 5)
             throw new BadNumberOfArgumentsException();
         
+        if (tableOfWords.length == 5 ) 
+            if( !tableOfWords[4].equals("--silent") )
+                throw new InputNotSupportedException();
         
         
         boolean isFirstWordIsDigit = true;
@@ -43,8 +47,7 @@ public class Converter {
         try {
             Double.parseDouble(tableOfWords[0]);
         } catch( Exception e) {
-            isFirstWordIsDigit = false;
-            return false;
+            throw new InputNotSupportedException();
         }
       
         return true;
@@ -53,7 +56,8 @@ public class Converter {
     /**
      * main function of this class, provide converstion 
      */
-    public String convert(String input) throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException { 
+    public String convert(String input) throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException { 
+        boolean silentFlag = false;
         //change comma (Polish notation to seperate fraction from decimal part) to dot (Americat notation)
         input = input.replace(',', '.');
         
@@ -70,6 +74,12 @@ public class Converter {
             return convertToMultiplyMeasures(tableOfWords);
         }
         
+        
+        //check if there is silent flag, when user give 5 arguments
+        if(tableOfWords.length == 5)
+            if( tableOfWords[4].equals("--silent"))
+                silentFlag = true;
+                
         String measureFrom = tableOfWords[1];
         String measureTo = tableOfWords[3];
         
@@ -96,7 +106,7 @@ public class Converter {
         Double convertedValue = orginalValue * converseFacotr;
         
         //build Anwser
-        String result = convertedValue.toString() + " " + measureTo;
+        String result = convertedValue.toString() + (silentFlag ? "" : " " + measureTo);
         
         return result;
     }

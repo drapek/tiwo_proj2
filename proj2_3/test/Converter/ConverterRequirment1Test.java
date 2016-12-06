@@ -7,6 +7,7 @@ package Converter;
  */
 
 import Exceptions.BadNumberOfArgumentsException;
+import Exceptions.InputNotSupportedException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -45,7 +46,7 @@ public class ConverterRequirment1Test {
     
     /**************** Tests of method correct ***************************************/
     @Test
-    public void inputValidationOfMethodCorrectTest() throws BadNumberOfArgumentsException {
+    public void inputValidationOfMethodCorrectTest() throws BadNumberOfArgumentsException, InputNotSupportedException {
         
         boolean isCorrect = converter.correct("20 inch to cm");
         
@@ -54,7 +55,7 @@ public class ConverterRequirment1Test {
     }
     
     @Test
-    public void inputValidationOfMethodCorrect2Test() throws BadNumberOfArgumentsException {
+    public void inputValidationOfMethodCorrect2Test() throws BadNumberOfArgumentsException, InputNotSupportedException {
         
         boolean isCorrect = converter.correct("20.423 inch to cm");
         
@@ -63,7 +64,7 @@ public class ConverterRequirment1Test {
     }
     
      @Test
-    public void inputValidationOfMethodCorrectWithFalseInputTest() throws BadNumberOfArgumentsException {
+    public void inputValidationOfMethodCorrectWithFalseInputTest() throws BadNumberOfArgumentsException, InputNotSupportedException {
         
         boolean anwser = converter.correct("inch 20 to cm");
    
@@ -72,7 +73,7 @@ public class ConverterRequirment1Test {
     }
     
      @Test
-    public void inputValidationOfMethodCorrectWithFalse2InputTest() throws BadNumberOfArgumentsException {
+    public void inputValidationOfMethodCorrectWithFalse2InputTest() throws BadNumberOfArgumentsException, InputNotSupportedException {
         
         boolean anwser = converter.correct("inch to 20 cm");
         
@@ -81,7 +82,7 @@ public class ConverterRequirment1Test {
     }
     
      @Test
-    public void inputValidationOfMethodCorrectWithFalse3InputTest() throws BadNumberOfArgumentsException {
+    public void inputValidationOfMethodCorrectWithFalse3InputTest() throws BadNumberOfArgumentsException, InputNotSupportedException {
         
         boolean anwser = converter.correct("20dfa inch to cm");
         
@@ -90,7 +91,7 @@ public class ConverterRequirment1Test {
     }
     
      @Test
-    public void inputValidationOfMethodCorrectWithFalse4InputTest() throws BadNumberOfArgumentsException {
+    public void inputValidationOfMethodCorrectWithFalse4InputTest() throws BadNumberOfArgumentsException, InputNotSupportedException {
         
         boolean anwser = converter.correct("20 inch cm");
         
@@ -99,7 +100,7 @@ public class ConverterRequirment1Test {
     }
     
     @Test
-    public void inputValidationOfMethodCorrectWithFalse5InputTest() throws BadNumberOfArgumentsException {
+    public void inputValidationOfMethodCorrectWithFalse5InputTest() throws BadNumberOfArgumentsException, InputNotSupportedException {
         
         boolean anwser = converter.correct("40 123 inch to cm");
         

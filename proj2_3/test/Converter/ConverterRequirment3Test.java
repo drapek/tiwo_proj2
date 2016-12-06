@@ -6,6 +6,7 @@
 package Converter;
 
 import Exceptions.BadNumberOfArgumentsException;
+import Exceptions.InputNotSupportedException;
 import Exceptions.MeasureTypeNotRecognised;
 import Exceptions.NumberOutOfDoubleRangeException;
 import org.junit.After;
@@ -29,28 +30,28 @@ public class ConverterRequirment3Test {
     }
     
     @Test
-    public void goodMeasureTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void goodMeasureTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("2 centimeters to inch");
         assertNotNull(anws);
         
     }
     
     @Test(expected = MeasureTypeNotRecognised.class)
-    public void measureNotSuporrtedTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void measureNotSuporrtedTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("2 yards to inch");
         assertNotNull(anws);
  
     }
     
     @Test(expected = MeasureTypeNotRecognised.class)
-    public void measureNotSuporrtedTest2() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void measureNotSuporrtedTest2() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("2 km to yard");
         assertNotNull(anws);
        
     }
     
     @Test(expected = MeasureTypeNotRecognised.class)
-    public void measureNameMispelledTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void measureNameMispelledTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("2 centtimeters to inch");
         assertNotNull(anws);
         

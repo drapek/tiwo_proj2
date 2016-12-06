@@ -7,6 +7,7 @@ package Converter;
 
 import Exceptions.MeasureTypeNotRecognised;
 import Exceptions.BadNumberOfArgumentsException;
+import Exceptions.InputNotSupportedException;
 import Exceptions.NumberOutOfDoubleRangeException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -29,14 +30,14 @@ public class ConverterRequirment5Test {
     }
 
     @Test(expected = MeasureTypeNotRecognised.class)
-    public void measureNotSuporrtedTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void measureNotSuporrtedTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("2,0 yards");
         assertNotNull(anws);
  
     }
     
     @Test
-    public void convertToMultiplyConversions() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void convertToMultiplyConversions() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("2,0 m");
         
         boolean containKilometers = anws.contains("0.002 km");
@@ -50,7 +51,7 @@ public class ConverterRequirment5Test {
    
     
     @Test
-    public void commaTesterGoodMeasureConverstionTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void commaTesterGoodMeasureConverstionTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("3,0 m to cm");
         
         boolean isContainGoodAnwser = anws.contains("300.0 cm");

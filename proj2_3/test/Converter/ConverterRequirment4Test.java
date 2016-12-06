@@ -7,7 +7,9 @@ package Converter;
 
 import Exceptions.MeasureTypeNotRecognised;
 import Exceptions.BadNumberOfArgumentsException;
+import Exceptions.InputNotSupportedException;
 import Exceptions.NumberOutOfDoubleRangeException;
+import java.util.InputMismatchException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -29,14 +31,14 @@ public class ConverterRequirment4Test {
     }
 
     @Test(expected = MeasureTypeNotRecognised.class)
-    public void measureNotSuporrtedTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void measureNotSuporrtedTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("2 yards");
         assertNotNull(anws);
  
     }
     
     @Test
-    public void convertToMultiplyConversions() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void convertToMultiplyConversions() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("2 m");
         
         boolean containKilometers = anws.contains("0.002 km");
@@ -52,18 +54,18 @@ public class ConverterRequirment4Test {
     }
     
     @Test( expected = BadNumberOfArgumentsException.class)
-    public void givenOnlyOneArgument() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void givenOnlyOneArgument() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("100");
     }
     
     
     @Test( expected = BadNumberOfArgumentsException.class)
-    public void notSpecifiedDestinationMeasure() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    public void notSpecifiedDestinationMeasure() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("100 km to");
     }
     
-    @Test( expected = BadNumberOfArgumentsException.class)
-    public void toManyArgumentsToConvert() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+    @Test( expected = InputNotSupportedException.class)
+    public void toManyArgumentsToConvert() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException {
         String anws = converter.convert("100 km to meter sweter");
     }
 }
