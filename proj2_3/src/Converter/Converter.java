@@ -7,7 +7,6 @@ package Converter;
 
 import Exceptions.MeasureTypeNotRecognised;
 import Exceptions.BadNumberOfArgumentsException;
-import Exceptions.InputNotSupportedException;
 import Exceptions.NumberOutOfDoubleRangeException;
 import java.util.ArrayList;
 
@@ -17,37 +16,35 @@ import java.util.ArrayList;
  */
 public class Converter {
     private ArrayList <MeasureToMeasureFactor> listOfMeasures;
+    private boolean useDotOnOutput;
     
     public Converter() {
         loadDefaultMeasures();
+        useDotOnOutput = true;
     }
-    protected boolean correct(String inputToValidate) throws BadNumberOfArgumentsException, InputNotSupportedException {
+    protected boolean correct(String inputToValidate) throws BadNumberOfArgumentsException {
         String [] tableOfWords = inputToValidate.split(" ");
         
         
         if( tableOfWords.length  < 2)
             throw new BadNumberOfArgumentsException();
         
-        if( tableOfWords.length == 4 || tableOfWords.length == 5) {
+        if( tableOfWords.length == 4) {
             //The case when we specify destination measurment eg. 20 inch to cm
             if( !tableOfWords[2].equals("to") )
-                throw new InputNotSupportedException();
+                return false;
         } 
         
-        if (tableOfWords.length == 3 || tableOfWords.length > 5)
+        if (tableOfWords.length == 3 || tableOfWords.length > 4)
             throw new BadNumberOfArgumentsException();
         
-        if (tableOfWords.length == 5 ) 
-            if( !tableOfWords[4].equals("--silent") )
-                throw new InputNotSupportedException();
         
         
-        boolean isFirstWordIsDigit = true;
         /* check if first word is an digit */ 
         try {
             Double.parseDouble(tableOfWords[0]);
         } catch( Exception e) {
-            throw new InputNotSupportedException();
+            return false;
         }
       
         return true;
@@ -56,10 +53,17 @@ public class Converter {
     /**
      * main function of this class, provide converstion 
      */
-    public String convert(String input) throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException, InputNotSupportedException { 
-        boolean silentFlag = false;
-        //change comma (Polish notation to seperate fraction from decimal part) to dot (Americat notation)
-        input = input.replace(',', '.');
+    public String convert(String input) throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException { 
+        
+        //decide on comma or dot(Polish vs American notation)
+        if(input.contains(","))
+        {
+            useDotOnOutput = false;
+            input = input.replace(',', '.');
+        }
+        else
+            useDotOnOutput = true;
+            
         
         //validate input
         if (!correct(input))
@@ -74,12 +78,6 @@ public class Converter {
             return convertToMultiplyMeasures(tableOfWords);
         }
         
-        
-        //check if there is silent flag, when user give 5 arguments
-        if(tableOfWords.length == 5)
-            if( tableOfWords[4].equals("--silent"))
-                silentFlag = true;
-                
         String measureFrom = tableOfWords[1];
         String measureTo = tableOfWords[3];
         
@@ -105,8 +103,10 @@ public class Converter {
         
         Double convertedValue = orginalValue * converseFacotr;
         
-        //build Anwser
-        String result = convertedValue.toString() + (silentFlag ? "" : " " + measureTo);
+        //build Anwser  
+        String result = convertedValue.toString() + " " + measureTo;
+        if(useDotOnOutput == false)
+            result = result.replace(".", ",");
         
         return result;
     }
@@ -136,6 +136,8 @@ public class Converter {
         
         if( result == "") 
             throw new MeasureTypeNotRecognised();
+        if(useDotOnOutput == false)
+            result = result.replace(".", ",");
         
         //prepare anwser
         return result;
