@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  *
  * @author drapek
  */
-public class ConverterRequirment4Test {
+public class ConverterRequirment5Test {
     private Converter converter;
     
     @Before
@@ -30,40 +30,31 @@ public class ConverterRequirment4Test {
 
     @Test(expected = MeasureTypeNotRecognised.class)
     public void measureNotSuporrtedTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
-        String anws = converter.convert("2 yards");
+        String anws = converter.convert("2,0 yards");
         assertNotNull(anws);
  
     }
     
     @Test
     public void convertToMultiplyConversions() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
-        String anws = converter.convert("2 m");
+        String anws = converter.convert("2,0 m");
         
         boolean containKilometers = anws.contains("0.002 km");
         boolean containCentimeters = anws.contains("200.0 cm");
         
-        System.out.println("Anwser: " + anws);
-        
         assertTrue(containKilometers);
         assertTrue(containCentimeters);
-        
-        
  
     }
     
-    @Test( expected = BadNumberOfArgumentsException.class)
-    public void givenOnlyOneArgument() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
-        String anws = converter.convert("100");
-    }
+   
     
-    
-    @Test( expected = BadNumberOfArgumentsException.class)
-    public void notSpecifiedDestinationMeasure() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
-        String anws = converter.convert("100 km to");
-    }
-    
-    @Test( expected = BadNumberOfArgumentsException.class)
-    public void toManyArgumentsToConvert() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
-        String anws = converter.convert("100 km to meter sweter");
+    @Test
+    public void commaTesterGoodMeasureConverstionTest() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
+        String anws = converter.convert("3,0 m to cm");
+        
+        boolean isContainGoodAnwser = anws.contains("300.0 cm");
+        System.out.println(anws);
+        assertTrue(isContainGoodAnwser);
     }
 }

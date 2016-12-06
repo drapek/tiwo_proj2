@@ -7,6 +7,7 @@ package Converter;
 
 import Exceptions.MeasureTypeNotRecognised;
 import Exceptions.BadNumberOfArgumentsException;
+import Exceptions.NumberOutOfDoubleRangeException;
 import java.util.ArrayList;
 
 /**
@@ -52,7 +53,11 @@ public class Converter {
     /**
      * main function of this class, provide converstion 
      */
-    public String convert(String input) throws MeasureTypeNotRecognised, BadNumberOfArgumentsException { 
+    public String convert(String input) throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException { 
+        //change comma (Polish notation to seperate fraction from decimal part) to dot (Americat notation)
+        input = input.replace(',', '.');
+        
+        //validate input
         if (!correct(input))
             return null;
        
@@ -67,7 +72,10 @@ public class Converter {
         
         String measureFrom = tableOfWords[1];
         String measureTo = tableOfWords[3];
-        Double orignalValue = Double.parseDouble(tableOfWords[0]);
+        
+        Double orginalValue = Double.parseDouble(tableOfWords[0]);
+        if(  orginalValue == Double.NEGATIVE_INFINITY || orginalValue == Double.POSITIVE_INFINITY)
+            throw new NumberOutOfDoubleRangeException();
         
         //we are seraching for apropate conversion factor
         Double converseFacotr = null;
@@ -85,10 +93,10 @@ public class Converter {
         if( converseFacotr == null)
             throw new MeasureTypeNotRecognised();
         
-        Double convertedValue = orignalValue * converseFacotr;
+        Double convertedValue = orginalValue * converseFacotr;
         
         //build Anwser
-        String result = convertedValue.toString() + measureTo;
+        String result = convertedValue.toString() + " " + measureTo;
         
         return result;
     }
@@ -97,8 +105,11 @@ public class Converter {
      * method to generate multiply measures. It occurs when user input only digit and base measure.
      * This function should generate output which all possible convertions. 
      */
-    private String convertToMultiplyMeasures(String [] inputArray) throws MeasureTypeNotRecognised {
-        String originValue = inputArray[0];
+    private String convertToMultiplyMeasures(String [] inputArray) throws MeasureTypeNotRecognised, NumberOutOfDoubleRangeException {
+        Double originValue = Double.parseDouble(inputArray[0]);
+        if(  originValue == Double.NEGATIVE_INFINITY || originValue == Double.POSITIVE_INFINITY)
+            throw new NumberOutOfDoubleRangeException();
+        
         String originMeasure = inputArray[1];
         String result = "";
                 
@@ -107,7 +118,7 @@ public class Converter {
             
             //if finded compalible measure than add it to result
             if( tmp != null) {
-                double convertedValue = Double.parseDouble(originValue) * tmp.getMeasureFactor();
+                double convertedValue = originValue * tmp.getMeasureFactor();
                 result += ( convertedValue + " " + tmp.getDestiantionMeasureName() + "\n"); 
             }
             

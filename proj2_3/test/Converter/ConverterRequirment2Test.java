@@ -7,6 +7,7 @@ package Converter;
 
 import Exceptions.BadNumberOfArgumentsException;
 import Exceptions.MeasureTypeNotRecognised;
+import Exceptions.NumberOutOfDoubleRangeException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,25 +29,25 @@ public class ConverterRequirment2Test {
     }
     
     @Test
-    public void measureNamesTest1() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException {
+    public void measureNamesTest1() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
         String anws = converter.convert("2 centimeters to inch");
         assertNotNull(anws);
     }
     
     @Test
-    public void measureNamesTest2() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException {
+    public void measureNamesTest2() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
         String anws = converter.convert("93 cm to inch");
         assertNotNull(anws);
     }
     
     @Test
-    public void measureNamesTest3() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException {
+    public void measureNamesTest3() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
         String anws = converter.convert("22 centymetry to cale");
         assertNotNull(anws);
     }
     
     @Test
-    public void measureNamesTest4() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException {
+    public void measureNamesTest4() throws MeasureTypeNotRecognised, BadNumberOfArgumentsException, NumberOutOfDoubleRangeException {
         String anws = converter.convert("1 centymetr to cal");
         assertNotNull(anws);
     }

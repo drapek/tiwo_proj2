@@ -96,13 +96,13 @@ public class MeasureToMeasureFactor {
                 if( measure2ToMeasure1Multiplyer == 0.0 )
                     return 0.0; //because both of factors are 0.0, so we can't do nothing about this
                 else
-                    return (1 / measure1ToMeasure2Multiplyer);
+                    return (1 / measure2ToMeasure1Multiplyer);
             } else {
                 //our base measure is second set
                 if( measure1ToMeasure2Multiplyer == 0.0 )
                     return 0.0; //because both of factors are 0.0, so we can't do nothing about this
                 else
-                    return (1 / measure2ToMeasure1Multiplyer);
+                    return (1 / measure1ToMeasure2Multiplyer);
             }
         }
         
